@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          'antialiased h-screen',
+          'antialiased h-screen bg-Blue-700',
           font.className
         )}
       >

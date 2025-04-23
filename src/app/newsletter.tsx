@@ -2,7 +2,7 @@
 'use client'
 
 import { cn } from "@/lib/utils";
-import { FormEvent, ReactNode, useEffect, useState } from "react";
+import { FormEvent, ReactNode, useState } from "react";
 import { z } from "zod";
 
 function Button({ 
@@ -31,7 +31,7 @@ function Button({
 
 function ListItem({ text }: { text: string }) {
   return (
-    <li className="flex items-start gap-4 text-sm tracking-wider">
+    <li className="flex items-start gap-4 text-sm sm:text-md tracking-wider sm:tracking-normal">
       <img
         src={'/icon-list.svg'}
         alt="check icon"
@@ -53,7 +53,7 @@ export function Form({
     const [hasError, setHasError] = useState(false);
 
     function getFormData(e: FormEvent<HTMLFormElement>) {
-        return Object.fromEntries(new FormData(e.target))
+        return Object.fromEntries(new FormData(e.target as HTMLFormElement))
     }
 
     function validateForm(form: any) {
@@ -75,32 +75,30 @@ export function Form({
         }
     }
 
-    function handleOnChange(e) {
+    function handleOnChange(e: unknown) {
       setHasError(false)
       if (typeof onChange === 'function') { onChange(e) }
     }
-
-    useEffect(() => {
-      console.log({ email, hasError })
-    }, [email, hasError])
 
     return (
         <div className={cn(
             'flex flex-col gap-2',
             'sm:flex-row-reverse'
           )}>
-            <div className="">
+            <div className="flex-1/2 sm:p-6 h-150">
               <img
                 src={'/illustration-sign-up-mobile.svg'}
                 alt="random illustration"
+                className="h-full object-cover sm:rounded-2xl"
               />
             </div>
             <div className={cn(
-              'flex flex-col gap-8 p-6 pb-8',
+              'flex-1/2 flex flex-col gap-8 p-6 pb-8',
+              'sm:p-14 sm:justify-center'
             )}>
               <div className="flex flex-col gap-4">
-                <h1 className="text-4xl font-bold self-start">Stay updated!</h1>
-                <p className="text-sm tracking-wide">Join 60,000+ product managers receiving monthly updates on:</p>
+                <h1 className="text-4xl sm:text-5xl font-bold self-start">Stay updated!</h1>
+                <p className="text-sm sm:text-md tracking-wide">Join 60,000+ product managers receiving monthly updates on:</p>
                 <ul className="flex flex-col gap-4">
                   <ListItem text="Product discovery and building what matters" />
                   <ListItem text="Measuring to ensure updates are a success" />
@@ -114,10 +112,10 @@ export function Form({
                 <div className="flex flex-col gap-2">
                   <label
                     htmlFor="email"
-                    className="text-xs font-semibold"
+                    className="text-xs sm:text-sm font-semibold"
                   >
                     <div className="flex justify-between">
-                      <span>Email address</span>
+                      <span className="">Email address</span>
                       { hasError && <span className="text-Red">Valid email required</span>}
                     </div>
                   </label>
@@ -156,27 +154,31 @@ export function Success({
     }
 
     return (
-        <div className="flex flex-col h-screen justify-between gap-6 p-6">
-            <div className="flex flex-col flex-grow justify-center gap-6">
-                <img 
-                    src={'/icon-success.svg'}
-                    alt="Successful subscription"
-                    className="size-14"
-                />
-                <h1 
-                    className="text-4xl font-bold"
-                >
-                    Thanks for subscribing!
-                </h1>
-                <p className="text-sm">
-                    A confirmation email has been sent to <span className="font-bold">{ email }</span>.
-                    Please open it and click the button inside to confirm your subscription.
-                </p>
-            </div>
-
-            <Button onClick={handleOnClick}>
-                Dismiss message    
-            </Button>
+        <div>
+          <div className={cn(
+            'flex flex-col flex-grow h-screen justify-between gap-6 p-6',
+            'sm:h-fit sm:max-w-sm sm:p-10'
+          )}>
+              <div className="flex flex-col flex-grow sm:flex-none justify-center gap-6">
+                  <img
+                      src={'/icon-success.svg'}
+                      alt="Successful subscription"
+                      className="size-14"
+                  />
+                  <h1
+                      className="text-4xl sm:text-5xl font-bold"
+                  >
+                      Thanks for subscribing!
+                  </h1>
+                  <p className="text-sm">
+                      A confirmation email has been sent to <span className="font-bold">{ email }</span>.
+                      Please open it and click the button inside to confirm your subscription.
+                  </p>
+              </div>
+              <Button onClick={handleOnClick}>
+                  Dismiss message
+              </Button>
+          </div>
         </div>
     );
 }

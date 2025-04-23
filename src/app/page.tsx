@@ -17,18 +17,20 @@ export default function Home() {
   }
 
   return (
-    <main className="flex flex-col items-center justify-center">
-      { showFeedback
-        ? <Newsletter.Success 
-            email={email}
-            onClose={handleOnClose} 
-          />
-        : <Newsletter.Form 
-            email={email} 
-            onChange={(e) => setEmail(e.target.value)}
-            onSuccess={handleOnSuccess} 
-          />
-      }
+    <main className="flex flex-col h-screen justify-center items-center">
+      <div className="h-screen sm:max-w-4xl sm:h-fit sm:rounded-4xl bg-White">
+        { showFeedback
+          ? <Newsletter.Success 
+              email={email}
+              onClose={handleOnClose} 
+            />
+          : <Newsletter.Form 
+              email={email} 
+              onChange={(e) => setEmail(e.target.value)}
+              onSuccess={handleOnSuccess} 
+            />
+        }
+      </div>
     </main>
   );
 }
